@@ -1,15 +1,16 @@
 # Pastebin Keyword Crawler
 
-A Python script that scrapes Pastebin's public archive for pastes containing keywords related to cryptocurrency or Telegram links.
+A Python application that scrapes Pastebin's public archive for pastes containing keywords related to cryptocurrency or Telegram links.
 
 ## Features
 
-- Scrapes the latest 30 pastes from Pastebin's archive
+- Scrapes the latest pastes from Pastebin's archive
 - Detects crypto-related keywords and Telegram links
 - Stores matching results in JSONL format
 - Implements rate limiting to avoid being blocked
 - Includes logging for tracking processed pastes
 - Optional multithreading support for faster processing
+- **NEW**: Web interface for easy configuration and result visualization
 
 ## Installation
 
@@ -22,7 +23,25 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Basic Usage
+### Web Interface (Recommended)
+
+Run the Flask web application:
+
+```
+python app.py
+```
+
+Then open your browser and navigate to:
+- http://localhost:5000
+
+The web interface allows you to:
+- Configure crypto and Telegram keywords
+- Set the number of pastes to process
+- Enable/disable multithreading
+- Monitor progress in real-time
+- View and download results
+
+### Command Line Usage
 
 Run the script with:
 
@@ -58,11 +77,20 @@ This will provide:
 
 ## How It Works
 
-The script will:
-1. Scrape Pastebin's archive page
-2. Process each paste to check for keywords
-3. Save matches to `keyword_matches.jsonl`
-4. Log all activity to `crawler.log`
+The application:
+1. Scrapes Pastebin's archive page
+2. Processes each paste to check for keywords
+3. Saves matches to `keyword_matches.jsonl`
+4. Logs all activity to `crawler.log`
+
+## Web Application Features
+
+The web interface offers several advantages:
+1. **User-friendly Configuration**: Easily adjust search terms and crawler settings
+2. **Real-time Progress Monitoring**: Watch the crawler's progress with a visual indicator
+3. **Results Visualization**: View matching pastes in an organized, readable format
+4. **Download Option**: Download results as a JSONL file with one click
+5. **Responsive Design**: Works on desktop and mobile devices
 
 ## Output Format
 
@@ -85,4 +113,5 @@ Each matching paste is stored as a JSON object in the following format:
 1. **Rate Limiting**: Random delays between requests to avoid being blocked
 2. **Multithreading**: Optional threading for faster processing
 3. **Comprehensive Logging**: Detailed logs for monitoring and debugging
-4. **Validation Tool**: Script to analyze and validate the crawler results # CodeGrills-VinamraYadav
+4. **Validation Tool**: Script to analyze and validate the crawler results
+5. **Web Interface**: Visual application for easy configuration and result viewing

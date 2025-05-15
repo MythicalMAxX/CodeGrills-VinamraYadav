@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block title %}- Results{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3><i class="fas fa-search-plus"></i> Crawler Results</h3>
+                    <a href="/" class="btn btn-outline-light">
+                        <i class="fas fa-arrow-left"></i> Back to Crawler
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-1"><i class="fas fa-info-circle"></i> Summary</h5>
+                            <p class="mb-0">Found <strong>{{ count }}</strong> pastes matching your search criteria.</p>
+                        </div>
+                        <a href="{{ url_for('download_results', task_id=task_id) }}" class="btn btn-success">
+                            <i class="fas fa-download"></i> Download JSONL File
+                        </a>
+                    </div>
+                </div>
+                
+                {% if count > 0 %}
+                <div class="row">
+                    {% for result in results %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card result-card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-file-alt me-2"></i>Paste: {{ result.paste_id }}
+                                    </h5>
+                                    <a href="{{ result.url }}" target="_blank" class="text-white">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted mb-2">
+                                    <i class="far fa-clock"></i> {{ result.discovered_at }}
+                                </p>
+                                <p class="card-text">{{ result.context }}</p>
+                                
+                                <h6 class="mt-3 mb-2">Keywords Found:</h6>
+                                <div>
+                                    {% for keyword in result.keywords_found %}
+                                    <span class="badge bg-primary keyword-badge">{{ keyword }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="card-footer bg-light">
+                                <a href="{{ result.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-eye"></i> View Raw Content
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i> No matches were found with your search criteria.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
