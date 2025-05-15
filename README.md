@@ -12,6 +12,14 @@ A Python application that scrapes Pastebin's public archive for pastes containin
 - Optional multithreading support for faster processing
 - **NEW**: Web interface for easy configuration and result visualization
 
+## Proof of Concept
+
+Below are screenshots from the Proof of Concept implementation:
+
+![POC Screenshot 1](poc/image.png)
+
+![POC Screenshot 2](poc/image1.png)
+
 ## Installation
 
 1. Clone this repository
