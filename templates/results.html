@@ -21,9 +21,14 @@
                             <h5 class="mb-1"><i class="fas fa-info-circle"></i> Summary</h5>
                             <p class="mb-0">Found <strong>{{ count }}</strong> pastes matching your search criteria.</p>
                         </div>
-                        <a href="{{ url_for('download_results', task_id=task_id) }}" class="btn btn-success">
-                            <i class="fas fa-download"></i> Download JSONL File
-                        </a>
+                        <div class="d-flex gap-2">
+                            <a href="{{ url_for('download_results', task_id=task_id) }}" class="btn btn-success" id="download-btn">
+                                <i class="fas fa-download"></i> Download JSONL File
+                            </a>
+                            <button class="btn btn-danger" id="cleanup-btn">
+                                <i class="fas fa-trash"></i> Free Up Space
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
@@ -73,4 +78,35 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // Handle cleanup button click
+        $('#cleanup-btn').on('click', function() {
+            $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Cleaning up...');
+            
+            // Call the cleanup endpoint
+            $.ajax({
+                url: '/cleanup/{{ task_id }}',
+                method: 'POST',
+                success: function(response) {
+                    $('#cleanup-btn').html('<i class="fas fa-check"></i> Space Freed').addClass('btn-success').removeClass('btn-danger');
+                    
+                    // Show a notification
+                    alert('Storage space has been freed. You will be redirected to the home page.');
+                    
+                    setTimeout(function() {
+                        window.location.href = '/';
+                    }, 1000);
+                },
+                error: function() {
+                    $('#cleanup-btn').html('<i class="fas fa-exclamation-triangle"></i> Error').prop('disabled', false);
+                    alert('Failed to clean up. Please try again.');
+                }
+            });
+        });
+    });
+</script>
 {% endblock %} 

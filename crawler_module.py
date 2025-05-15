@@ -183,13 +183,19 @@ class PastebinCrawler:
         # Convert content to lowercase for case-insensitive matching
         content_lower = content.lower()
         
-        # Check for crypto keywords
-        crypto_matches = [keyword for keyword in self.crypto_keywords 
-                         if keyword.lower() in content_lower]
+        # Check for crypto keywords using word boundaries
+        crypto_matches = []
+        for keyword in self.crypto_keywords:
+            # Use word boundary regex pattern to match whole words only
+            pattern = r'\b' + re.escape(keyword.lower()) + r'\b'
+            if re.search(pattern, content_lower):
+                crypto_matches.append(keyword)
         
-        # Check for telegram links
-        telegram_matches = [keyword for keyword in self.telegram_keywords 
-                           if keyword.lower() in content_lower]
+        # Check for telegram links - these don't need word boundaries as they are unique URLs
+        telegram_matches = []
+        for keyword in self.telegram_keywords:
+            if keyword.lower() in content_lower:
+                telegram_matches.append(keyword)
         
         return list(set(crypto_matches + telegram_matches))
     

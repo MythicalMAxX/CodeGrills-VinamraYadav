@@ -34,6 +34,9 @@ python app.py
 Then open your browser and navigate to:
 - http://localhost:5000
 
+or try this version:
+- https://pastbin-crawler-f0cgereqhcgphgc6.eastus-01.azurewebsites.net/
+
 The web interface allows you to:
 - Configure crypto and Telegram keywords
 - Set the number of pastes to process
